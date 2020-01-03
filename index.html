@@ -9,72 +9,80 @@
 </head>
 
 <body>
+    <p class="info">**********please click on logo to add products to invoice**********</p>
     <div class="container">
       <h1 class="header">INVOICE</h1>
       <div class="logo">
             <img src="logo.jpg" alt="logo" height=100px width=100px />
             <div>
                 <p><span class="name">Raghav's - Inspired By Nature </span><br/><br/>
-                    Email ID: sales.raghavs05@gmail.com</p>
-                <p>Mobile No: 07518407843</p>
+                    Mobile No: +44 7518407843</p>
+                <p>Email ID: sales.raghavs05@gmail.com</p>
                 <p>Invoice No: <span class="invoiceno">1000</span></p>
+                <p>Date: <span class="date"></span></p>
             </div>        
       </div>
+      <p class="bankdetails" >Invoice To:</p class="bankdetails">
       <p class="coustmer"></p>
+      <p>Bristol</p>
+      <p class="coustmerPhone"></p>
       <div class="toggle" style="display: none;">
           <SELECT id="products" >
               <OPTION value="Products">Products</OPTION>
               <OPTION value="Foxtail Millet">Foxtail Millet</OPTION>
               <OPTION value="Little Millet">Little Millet</OPTION>
               <OPTION value="Barnyard Millet">Barnyard Millet</OPTION>
-              <OPTION value="Prosco Millet">Prosco Millet</OPTION>
+              <OPTION value="Proso Millet">Proso Millet</OPTION>
               <OPTION value="Browntop Millet">Browntop Millet</OPTION>
               <OPTION value="Kodo Millet">Kodo Millet</OPTION>
               <OPTION value="Multi Millet Flour">Multi Millet Flour</OPTION>
               <OPTION value="SorghumFlour">SorghumFlour</OPTION>
           </SELECT>
           <input type="number" value= 0  id="quantity" placeholder="Quantity">
-          <input type="number"  id="shipp" placeholder="Shipping">
           <SELECT id="price">
-                <OPTION value="0">Price</OPTION>
-                <OPTION value="3">3</OPTION>
-                <OPTION value="3.5">3.5</OPTION>
-                <OPTION value="2.8">2.8</OPTION>
-                <OPTION value="4">4</OPTION>
+                <OPTION value="0.00">Price</OPTION>
+                <OPTION value="3.00">3.00</OPTION>
+                <OPTION value="3.85">3.85</OPTION>
+                <OPTION value="2.75">2.75</OPTION>
+                <OPTION value="2.25">2.25</OPTION>
            </SELECT>
            <button  class="addrow">+</button>
       </div>
       <div class="toggle" style="display: none;">
         <input type="text"  id="fname" placeholder="First Name">
         <input type="text"  id="lname" placeholder="Last Name">
+        <input type="text"  id="Phoneno" placeholder="Phone Number">
         <button  class="addname">+</button>
       </div>
       <table class="table">
           <tr>
               <th>Iteam No</th> 
-              <th>Products</th> 
+              <th>Product</th> 
               <th>Quantity</th>
-              <th>Price</th>
-              <th>Shipping</th>
+              <th>Price/Kg</th>
               <th>Total</th>
           </tr>
       </table>
  
       <table class="table2">
           <tr>
-              <th>Subtotal</span></th>
+              <th>Subtotal</th>
               <td>0.0</td>
           </tr>
           <tr>
-              <th>Total Shipping</span></th>
-              <td>0.0</td>
+              <th>Total Shipping</th>
+              <td><input type="text"  id="shipp" placeholder="Shipping"></td>
           </tr>
           <tr>
-              <th>Total</span></th>
+              <th>Total</th>
               <td>0.0</td>
           </tr>
       </table>
-     
+      <div class="end"></div>
+      <p class="bankdetails">Payment Details:</p>
+      <p>Bank Name: XXX UK</p>
+      <p>Account No.: XXXXXXX</p>
+      <p>Sort Code: XX-XX-XX</p>
       <div class="end"></div>
     </div> 
        <button class="savepdf">Click</button>

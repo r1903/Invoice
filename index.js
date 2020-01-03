@@ -18,7 +18,7 @@ function addTable(e) {
         const productName = document.getElementById("products").value;
         const price = document.getElementById("price").value;
         const quantity = document.getElementById("quantity").value;
-        const shipp = document.getElementById("shipp").value;
+        const shipp = document.getElementById("shipp").value || `£ 0.00`;
 
  //calculating new row number       
         const tbody = document.querySelector(".table");
@@ -30,26 +30,26 @@ function addTable(e) {
         const cell3 = row.insertCell(2);
         const cell4 = row.insertCell(3);
         const cell5 = row.insertCell(4);
-        const cell6 = row.insertCell(5);
 // inserting value to the new cells        
         cell1.innerHTML = `<button class="remove">${rowCount}</button>`
         cell2.innerHTML = productName;
         cell3.innerHTML = quantity;
-        cell4.innerHTML = price;
-        cell5.innerHTML = shipp*quantity;
-        cell6.innerHTML = (price*quantity).toFixed(2);
+        cell4.innerHTML = (price);
+        cell5.innerHTML = (price*quantity).toFixed(2);
 // calculating total value for  second table
         const totalVal = document.querySelector(".table2").querySelectorAll("td");
         totalVal[0].innerHTML = `£ ${(parseFloat((totalVal[0].innerHTML).match(/\d+?\.\d+/)[0]) + price*quantity).toFixed(2)}`;
-        totalVal[1].innerHTML = `£ ${(parseFloat((totalVal[1].innerHTML).match(/\d+?\.\d+/)[0]) + shipp*quantity).toFixed(2)}`;
-        totalVal[2].innerHTML = `£ ${(parseFloat((totalVal[0].innerHTML).match(/\d+?\.\d+/)[0])+ parseFloat((totalVal[1].innerHTML).match(/\d+?\.\d+/)[0])).toFixed(2)}`;
+       // totalVal[1].innerHTML =  shipp || 0;
+        totalVal[2].innerHTML = `£ ${(parseFloat((totalVal[0].innerHTML).match(/\d+?\.\d+/)[0])+ parseFloat((shipp).match(/\d+?\.\d+/)[0])).toFixed(2)}`;
 }
 
 //add first name and last name to invoice
 function addName(){
        const firstName = document.getElementById("fname").value;
        const lastName = document.getElementById("lname").value;
-       document.querySelector(".coustmer").innerHTML = `${firstName} ${lastName}`
+       const cphone = document.getElementById("Phoneno").value;
+       document.querySelector(".coustmer").innerHTML = `${firstName} ${lastName}`;
+       document.querySelector(".coustmerPhone").innerHTML = cphone;
 }
 
 // function to hide value selecting row from invoice
@@ -63,9 +63,8 @@ function removeRow(e){
  //recalculating the total values before deleting row from table
         let rowNo= Number(e.target.innerHTML);
         const totalVal = document.querySelector(".table2").querySelectorAll("td") ;
-        totalVal[0].innerHTML = `£ ${(parseFloat((totalVal[0].innerHTML).match(/\d+?\.\d+/)[0]) - parseFloat(document.querySelector(".table").rows[rowNo].cells[5].innerHTML)).toFixed(2)}`;
-        totalVal[1].innerHTML= `£ ${(parseFloat((totalVal[1].innerHTML).match(/\d+?\.\d+/)[0]) - parseFloat(document.querySelector(".table").rows[rowNo].cells[4].innerHTML)).toFixed(2)}`;
-        totalVal[2].innerHTML = `£ ${(parseFloat((totalVal[0].innerHTML).match(/\d+?\.\d+/)[0]) + parseFloat((totalVal[1].innerHTML).match(/\d+?\.\d+/)[0])).toFixed(2)}`;
+        totalVal[0].innerHTML = `£ ${(parseFloat((totalVal[0].innerHTML).match(/\d+?\.\d+/)[0]) - parseFloat(document.querySelector(".table").rows[rowNo].cells[4].innerHTML)).toFixed(2)}`;
+        totalVal[2].innerHTML = `£ ${(parseFloat((totalVal[2].innerHTML).match(/\d+?\.\d+/)[0]) - parseFloat(document.querySelector(".table").rows[rowNo].cells[4].innerHTML)).toFixed(2)}`;
     
 //deleting the selected row from table       
         document.querySelector(".table").deleteRow(rowNo);
@@ -85,18 +84,18 @@ function onClick() {
        // code to store invoice number in localstorage to manage sequence
         let invoiceId= JSON.parse(localStorage.getItem('invoiceNo')) || '1000';
         document.querySelector(".invoiceno").innerHTML = Number(invoiceId)+1;
+        let date = new Date().getDate() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getFullYear();
+        document.querySelector(".date").innerHTML = date;
         invoiceId = Number(invoiceId)+1 ;
         localStorage.setItem('invoiceNo', JSON.stringify(invoiceId));
        //function to generate pdf
-        html2canvas(document.body, {useCORS: true,
+        html2canvas(document.querySelector(".container"), {useCORS: true,
             onrendered: function (canvas) {
               let imgData = canvas.toDataURL('image/png');
-            
-
                let doc = new jsPDF('p', 'pt', 'a4');
-               doc.addImage(imgData, 'PNG', 10, 10,595.28, 592.28/canvas.width * canvas.height);
+               doc.addImage(imgData, 'PNG', 10, 10,580, 595.28/canvas.width * canvas.height);
                const name = document.querySelector(".coustmer").innerHTML;
-             doc.save(`${invoiceId}/${name}.pdf`);
+             doc.save(`InvoiceNum${invoiceId}/${name}.pdf`);
               }
          });
 };

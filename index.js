@@ -18,7 +18,7 @@ function addTable(e) {
         const productName = document.getElementById("products").value;
         const price = document.getElementById("price").value;
         const quantity = document.getElementById("quantity").value;
-        const shipp = document.getElementById("shipp").value || `£ 0.00`;
+        const shipp = document.getElementById("shipp").value;
 
  //calculating new row number       
         const tbody = document.querySelector(".table");
@@ -39,8 +39,7 @@ function addTable(e) {
 // calculating total value for  second table
         const totalVal = document.querySelector(".table2").querySelectorAll("td");
         totalVal[0].innerHTML = `£ ${(parseFloat((totalVal[0].innerHTML).match(/\d+?\.\d+/)[0]) + price*quantity).toFixed(2)}`;
-       // totalVal[1].innerHTML =  shipp || 0;
-        totalVal[2].innerHTML = `£ ${(parseFloat((totalVal[0].innerHTML).match(/\d+?\.\d+/)[0])+ parseFloat((shipp).match(/\d+?\.\d+/)[0])).toFixed(2)}`;
+        totalVal[2].innerHTML = `£ ${(parseFloat((totalVal[0].innerHTML).match(/\d+?\.\d+/)[0])+ (shipp?parseFloat((shipp).match(/\d+?\.\d+/)[0]):0)).toFixed(2)}`;
 }
 
 //add first name and last name to invoice
@@ -82,25 +81,52 @@ function removeRow(e){
 
 function onClick() {
        // code to store invoice number in localstorage to manage sequence
-        let invoiceId= JSON.parse(localStorage.getItem('invoiceNo')) || '1000';
+        let invoiceId= JSON.parse(localStorage.getItem('invoiceNo')) || '2000';
         document.querySelector(".invoiceno").innerHTML = Number(invoiceId)+1;
         let date = new Date().getDate() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getFullYear();
         document.querySelector(".date").innerHTML = date;
         invoiceId = Number(invoiceId)+1 ;
         localStorage.setItem('invoiceNo', JSON.stringify(invoiceId));
        //function to generate pdf
-        html2canvas(document.querySelector(".container"), {useCORS: true,
-            onrendered: function (canvas) {
-              let imgData = canvas.toDataURL('image/png');
-               let doc = new jsPDF('p', 'pt', 'a4');
-               doc.addImage(imgData, 'PNG', 10, 10,580, 595.28/canvas.width * canvas.height);
-               const name = document.querySelector(".coustmer").innerHTML;
-             doc.save(`InvoiceNum${invoiceId}/${name}.pdf`);
-              }
-         });
+        // html2canvas(document.querySelector(".container"), {useCORS: true,
+        //     quality: 4,
+        //     scale: 5,
+        //     onrendered: function (canvas) {
+                   
+        //       let imgData = canvas.toDataURL('image/png',1);
+        //        let doc = new jsPDF('p', 'pt', 'a4');
+        //        doc.addImage(imgData, 'PNG', 10, 10,580, 595.28/canvas.width * canvas.height);
+        //        const name = document.querySelector(".coustmer").innerHTML;
+        //      doc.save(`InvoiceNum${invoiceId}/${name}.pdf`);
+        //       }
+        //  });
+
+        
+        const name = document.querySelector(".coustmer").innerHTML;
+        const element = document.querySelector(".container");
+
+        //function to store invoice as pdf
+        html2pdf(element, {
+                margin: 0.2,
+                filename: `InvoiceNum${invoiceId}/${name}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 2,  logging: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'l' }
+                });
+           
 };
 
 
+$( function() {
+        console.log(products);
+        $( "#products" ).autocomplete({
+          source: Object.keys(products),
+          close:updatePrice
+        });
 
+        function updatePrice(){
+          document.getElementById("price").value = products[document.getElementById("products").value];   
+        }
+      } );
   
   

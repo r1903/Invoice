@@ -4,21 +4,38 @@
 	<title>Invoice</title>
 	<meta charset="UTF-8" />
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+  <script src="./products.js"></script>
+  <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+  <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
 </head>
 
 <body>
-    <p class="info">**********please click on logo to add products to invoice**********</p>
+    <p class="info">**********Please click on logo to toggle input fields to include a products to invoice**********</p>
+    <div class="inputFields">
+        <div class="toggle" style="display: none;">
+            <input type="text" id="products" placeholder="Product">
+            <input type="number" value= 0  id="quantity" placeholder="Quantity">
+            <input type="text" id="price" placeholder="price">
+            <label>Add Product<button  class="addrow">+</button></label>
+        </div>
+        <div class="toggle" style="display: none;">
+        <input type="text"  id="fname" placeholder="First Name">
+        <input type="text"  id="lname" placeholder="Last Name">
+        <input type="text"  id="Phoneno" placeholder="Phone Number">
+        <button  class="addname">+</button>
+    </div>
+    </div>
     <div class="container">
       <h1 class="header">INVOICE</h1>
       <div class="logo">
             <img src="logo.jpg" alt="logo" height=100px width=100px />
             <div>
                 <p><span class="name">Raghav's - Inspired By Nature </span><br/><br/>
-                    Mobile No: +44 7518407843</p>
-                <p>Email ID: sales.raghavs05@gmail.com</p>
-                <p>Invoice No: <span class="invoiceno">1000</span></p>
+                    Mobile No: +44 XXXXXXXXXX</p>
+                <p>Email ID: incoice@test.com</p>
+                <p>Invoice No: <span class="invoiceno">2000</span></p>
                 <p>Date: <span class="date"></span></p>
             </div>        
       </div>
@@ -26,34 +43,6 @@
       <p class="coustmer"></p>
       <p>Bristol</p>
       <p class="coustmerPhone"></p>
-      <div class="toggle" style="display: none;">
-          <SELECT id="products" >
-              <OPTION value="Products">Products</OPTION>
-              <OPTION value="Foxtail Millet">Foxtail Millet</OPTION>
-              <OPTION value="Little Millet">Little Millet</OPTION>
-              <OPTION value="Barnyard Millet">Barnyard Millet</OPTION>
-              <OPTION value="Proso Millet">Proso Millet</OPTION>
-              <OPTION value="Browntop Millet">Browntop Millet</OPTION>
-              <OPTION value="Kodo Millet">Kodo Millet</OPTION>
-              <OPTION value="Multi Millet Flour">Multi Millet Flour</OPTION>
-              <OPTION value="SorghumFlour">SorghumFlour</OPTION>
-          </SELECT>
-          <input type="number" value= 0  id="quantity" placeholder="Quantity">
-          <SELECT id="price">
-                <OPTION value="0.00">Price</OPTION>
-                <OPTION value="3.00">3.00</OPTION>
-                <OPTION value="3.85">3.85</OPTION>
-                <OPTION value="2.75">2.75</OPTION>
-                <OPTION value="2.25">2.25</OPTION>
-           </SELECT>
-           <button  class="addrow">+</button>
-      </div>
-      <div class="toggle" style="display: none;">
-        <input type="text"  id="fname" placeholder="First Name">
-        <input type="text"  id="lname" placeholder="Last Name">
-        <input type="text"  id="Phoneno" placeholder="Phone Number">
-        <button  class="addname">+</button>
-      </div>
       <table class="table">
           <tr>
               <th>Iteam No</th> 
@@ -80,13 +69,15 @@
       </table>
       <div class="end"></div>
       <p class="bankdetails">Payment Details:</p>
-      <p>Bank Name: XXX UK</p>
-      <p>Account No.: XXXXXXX</p>
-      <p>Sort Code: XX-XX-XX</p>
+      <p>Bank Name: XXXXX</p>
+      <p>Account No.: XXXXX</p>
+      <p>Sort Code: XXXX</p>
       <div class="end"></div>
     </div> 
-       <button class="savepdf">Click</button>
-       <script src="index.js"></script>
+    <div class="savepdf">
+      <button>Save as PDF</button>
+    </div>
+    <script src="index.js"></script>
 </body>
 
 </html>
